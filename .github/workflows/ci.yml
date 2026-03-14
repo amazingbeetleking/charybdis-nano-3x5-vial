@@ -24,4 +24,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: firmware
-          path: .build/*.uf2
+          path: |
+            .build/*.uf2
+            .build/*.hex
+            .build/*.bin
+          if-no-files-found: error
