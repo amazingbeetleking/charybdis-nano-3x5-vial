@@ -23,7 +23,7 @@ jobs:
       run: python3 util/ci_vial_verify_uid.py
 
   build-vial:
-    name: Build Crosses 3x5 Vial
+    name: Build Charybdis nano Vial
     runs-on: ubuntu-latest
     container: ghcr.io/qmk/qmk_cli@sha256:16c4916e95b99bf88d27b15aec8db409ee17265d1710287fde248c6666508966
 
