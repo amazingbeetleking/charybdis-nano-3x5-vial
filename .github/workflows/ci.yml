@@ -42,7 +42,7 @@ jobs:
     - name: Upload firmware
       uses: actions/upload-artifact@v4
       with:
-        name: crosses_3x5_firmware
+        name: Charybdis_nano_Vial_firmware
         path: |
           *.uf2
           *.hex
