@@ -30,12 +30,8 @@
 #define SPLIT_USB_TIMEOUT 2000
 #define USB_WAIT_FOR_ENUMERATION
 
-// Только безопасные параметры для split:
-// Чаще проверять связь после обрыва (default 500ms → 100ms)
-#define SPLIT_CONNECTION_CHECK_TIMEOUT 100
-
-// Чаще синхронизировать состояние половинок (default 100ms → 50ms)
-#define FORCED_SYNC_THROTTLE_MS 50
+#define TAPPING_FORCE_HOLD
+#define PERMISSIVE_HOLD
 
 #ifdef POINTING_DEVICE_ENABLE
 // #define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
