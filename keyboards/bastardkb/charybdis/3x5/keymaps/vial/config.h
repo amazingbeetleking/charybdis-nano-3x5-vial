@@ -26,12 +26,30 @@
 #define TAPPING_FORCE_HOLD
 #define PERMISSIVE_HOLD
 
+// --- USB/Split detection ---
 #define SPLIT_USB_DETECT
 #define SPLIT_USB_TIMEOUT 2000
 #define USB_WAIT_FOR_ENUMERATION
 
-#define TAPPING_FORCE_HOLD
-#define PERMISSIVE_HOLD
+// --- Split serial stability fixes ---
+// Lower speed for noisy/dirty TRRS connection (1=137kbps, 3=39kbps)
+#define SELECT_SOFT_SERIAL_SPEED 3
+
+// Never give up trying to reconnect to slave
+#define SPLIT_MAX_CONNECTION_ERRORS 0
+
+// Retry connection faster after dropout (default 500ms)
+#define SPLIT_CONNECTION_CHECK_TIMEOUT 100
+
+// Watchdog: reboots slave if master is silent for 2000ms
+#define SPLIT_WATCHDOG_ENABLE
+#define SPLIT_WATCHDOG_TIMEOUT 2000
+
+// Larger USART timeout for RP2040 (default 20ms)
+#define SERIAL_USART_TIMEOUT 50
+
+// Force sync state more often (default 100ms)
+#define FORCED_SYNC_THROTTLE_MS 50
 
 #ifdef POINTING_DEVICE_ENABLE
 // #define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
