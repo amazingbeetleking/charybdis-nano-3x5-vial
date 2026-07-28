@@ -1,7 +1,7 @@
 #pragma once
 
 #ifdef VIA_ENABLE
-#    define DYNAMIC_KEYMAP_LAYER_COUNT 6
+#    define DYNAMIC_KEYMAP_LAYER_COUNT 7
 
 #    ifdef VIAL_ENABLE
 #        define VIAL_KEYBOARD_UID \
