@@ -18,6 +18,9 @@
         "rows": ["GP26", "GP5", "GP4", "GP9"]
     },
     "diode_direction": "ROW2COL",
+    "bootmagic": {
+        "matrix": [0, 0]
+    },
     "split": {
         "enabled": true,
         "soft_serial_pin": "GP1"
