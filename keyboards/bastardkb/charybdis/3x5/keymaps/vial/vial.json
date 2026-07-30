@@ -3,14 +3,14 @@
     "vendorId": "0xA8F8",
     "productId": "0x1832",
     "customKeycodes": [
-        {"name": "DPI+",     "title": "Increase pointer DPI",       "shortName": "DPI_MOD"},
-        {"name": "DPI-",     "title": "Decrease pointer DPI",       "shortName": "DPI_RMOD"},
-        {"name": "Snp DPI+", "title": "Increase sniping DPI",       "shortName": "S_D_MOD"},
-        {"name": "Snp DPI-", "title": "Decrease sniping DPI",       "shortName": "S_D_RMOD"},
-        {"name": "Sniping",  "title": "Sniping mode (hold)",        "shortName": "SNIPING"},
-        {"name": "Snp Tog",  "title": "Sniping mode (toggle)",      "shortName": "SNP_TOG"},
-        {"name": "Scroll",   "title": "Drag scroll (hold)",         "shortName": "DRGSCRL"},
-        {"name": "Scrl Tog", "title": "Drag scroll (toggle)",       "shortName": "DRG_TOG"}
+        {"name": "DPI+",     "title": "Increase pointer DPI",       "shortName": "DPI\n INC"},
+        {"name": "DPI-",     "title": "Decrease pointer DPI",       "shortName": "DPI\n DEC"},
+        {"name": "Snp DPI+", "title": "Increase sniping DPI",       "shortName": "SNP\n INC"},
+        {"name": "Snp DPI-", "title": "Decrease sniping DPI",       "shortName": "SNP\n DEC"},
+        {"name": "Sniping",  "title": "Sniping mode (hold)",        "shortName": "SNP"},
+        {"name": "Snp Tog",  "title": "Sniping mode (toggle)",      "shortName": "SNP\n TOG"},
+        {"name": "Scroll",   "title": "Drag scroll (hold)",         "shortName": "SCR"},
+        {"name": "Scrl Tog", "title": "Drag scroll (toggle)",       "shortName": "SCR\n TOG"}
     ],
     "matrix": {
         "rows": 8,
