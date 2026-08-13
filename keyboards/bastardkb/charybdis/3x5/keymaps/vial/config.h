@@ -26,9 +26,18 @@
 #define TAPPING_FORCE_HOLD
 #define PERMISSIVE_HOLD
 
-#define SPLIT_USB_TIMEOUT 10000
+#define SPLIT_USB_TIMEOUT 2000
 #define SPLIT_USB_TIMEOUT_POLL 10
 #define USB_SUSPEND_WAKEUP_DELAY 1000
+
+// --- Фикс "левая половина не работает после включения ПК, помогает только переподключение USB" ---
+// Мастер никогда не считает слейв "отключённым" и продолжает пытаться связаться с ним каждый скан-цикл,
+// а не раз в 500мс после серии неудач
+#define SPLIT_MAX_CONNECTION_ERRORS 0
+// Слейв (левая половина) сам себя перезагружает, если не слышит мастера дольше SPLIT_WATCHDOG_TIMEOUT мс -
+// это устраняет "залипание" связи при холодном старте без необходимости дёргать USB-кабель
+#define SPLIT_WATCHDOG_ENABLE
+#define SPLIT_WATCHDOG_TIMEOUT 1500
 
 #define TAPPING_FORCE_HOLD
 #define PERMISSIVE_HOLD
