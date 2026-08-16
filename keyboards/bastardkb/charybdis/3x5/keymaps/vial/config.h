@@ -38,11 +38,10 @@
 #define SPLIT_USB_TIMEOUT_POLL 10
 #define USB_SUSPEND_WAKEUP_DELAY 1000
 
-// Слейв (левая половина) сам перезагрузится, если не услышит мастера дольше SPLIT_WATCHDOG_TIMEOUT мс -
-// подстраховка на случай, если пауза выше (SPLIT_USB_TIMEOUT) не спасёт и связь всё равно не установится.
-// Таймаут обязан быть БОЛЬШЕ SPLIT_USB_TIMEOUT (иначе ошибка сборки), поэтому берём с запасом.
-#define SPLIT_WATCHDOG_ENABLE
-#define SPLIT_WATCHDOG_TIMEOUT 15000
+// Мастер (правая половина) никогда не считает связь с левой "потерянной навсегда" и продолжает
+// пытаться установить её на каждом цикле сканирования матрицы (сотни раз в секунду), пока есть питание -
+// а не ждёт какой-то фиксированный тайм-аут, чтобы сдаться или перезагрузиться
+#define SPLIT_MAX_CONNECTION_ERRORS 0
 
 #define TAPPING_FORCE_HOLD
 #define PERMISSIVE_HOLD
