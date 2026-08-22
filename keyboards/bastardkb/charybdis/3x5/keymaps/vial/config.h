@@ -23,9 +23,6 @@
 #    define TAPPING_TERM 200
 #endif
 
-#define TAPPING_FORCE_HOLD
-#define PERMISSIVE_HOLD
-
 // Исправление зависания slave при холодном старте
 #define SPLIT_WATCHDOG_ENABLE
 #define SPLIT_WATCHDOG_TIMEOUT 3000
