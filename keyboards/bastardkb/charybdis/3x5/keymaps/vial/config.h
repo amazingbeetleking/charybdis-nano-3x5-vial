@@ -24,9 +24,7 @@
 #    define TAPPING_TERM 200
 #endif
 
-// Исправление зависания slave при холодном старте
-#define SPLIT_WATCHDOG_ENABLE
-#define SPLIT_WATCHDOG_TIMEOUT 3000
+
 
 
 #define SPLIT_USB_DETECT
