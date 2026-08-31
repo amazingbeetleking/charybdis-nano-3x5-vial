@@ -25,9 +25,6 @@
 #endif
 
 
-
-#define USB_WAIT_FOR_ENUMERATION
-
 #define TAPPING_FORCE_HOLD
 #define PERMISSIVE_HOLD
 
