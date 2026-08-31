@@ -11,10 +11,10 @@
 #        define VIAL_UNLOCK_COMBO_COLS \
             { 0, 0 }
 
-#        define VIAL_TAP_DANCE_ENTRIES 16
-#        define VIAL_COMBO_ENTRIES 16
-#        define VIAL_KEY_OVERRIDE_ENTRIES 16
-#        define DYNAMIC_KEYMAP_MACRO_COUNT 16
+#        define VIAL_TAP_DANCE_ENTRIES 8
+#        define VIAL_COMBO_ENTRIES 8
+#        define VIAL_KEY_OVERRIDE_ENTRIES 8
+#        define DYNAMIC_KEYMAP_MACRO_COUNT 8
 #    endif // VIAL_ENABLE
 #endif     // VIA_ENABLE
 
