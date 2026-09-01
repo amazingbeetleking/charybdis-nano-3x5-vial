@@ -1,7 +1,7 @@
 #pragma once
 
 #ifdef VIA_ENABLE
-#    define DYNAMIC_KEYMAP_LAYER_COUNT 7
+#    define DYNAMIC_KEYMAP_LAYER_COUNT 9
 
 #    ifdef VIAL_ENABLE
 #        define VIAL_KEYBOARD_UID \
@@ -11,12 +11,12 @@
 #        define VIAL_UNLOCK_COMBO_COLS \
             { 0, 0 }
 
-#        define VIAL_TAP_DANCE_ENTRIES 16
-#        define VIAL_COMBO_ENTRIES 16
-#        define VIAL_KEY_OVERRIDE_ENTRIES 16
-#        define DYNAMIC_KEYMAP_MACRO_COUNT 16
-#    endif // VIAL_ENABLE
-#endif     // VIA_ENABLE
+#        define VIAL_TAP_DANCE_ENTRIES 32
+#        define VIAL_COMBO_ENTRIES 32
+#        define VIAL_KEY_OVERRIDE_ENTRIES 32
+#        define DYNAMIC_KEYMAP_MACRO_COUNT 32
+#    endif// VIAL_ENABLE
+#    endif// VIA_ENABLE
 
 #define NO_ACTION_ONESHOT
 
