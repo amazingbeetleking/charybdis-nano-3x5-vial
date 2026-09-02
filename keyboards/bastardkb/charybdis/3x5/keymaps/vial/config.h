@@ -15,8 +15,11 @@
 #        define VIAL_COMBO_ENTRIES 32
 #        define VIAL_KEY_OVERRIDE_ENTRIES 32
 #        define DYNAMIC_KEYMAP_MACRO_COUNT 32
-#    endif// VIAL_ENABLE
-#    endif// VIA_ENABLE
+#         endif// VIAL_ENABLE
+#         endif// VIA_ENABLE
+
+#        define SPLIT_WATCHDOG_ENABLE
+#        define SPLIT_WATCHDOG_TIMEOUT 3000
 
 #define NO_ACTION_ONESHOT
 
