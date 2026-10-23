@@ -166,3 +166,25 @@ bool shutdown_user(bool jump_to_bootloader) {
 #endif
     return true;
 }
+
+/*
+ * Заплатка: автоматический перезапуск ведомой (левой) половины после включения питания.
+ *
+ * Левая половина при холодном старте через TRRS иногда запускается в неудачном
+ * состоянии, а нажатие кнопки reset это лечит. Этот код делает то же самое сам:
+ * если половина ведомая и стартовала от включения питания (а не от кнопки reset
+ * и не от watchdog), она один раз перезагружает себя через watchdog RP2040.
+ * После такой перезагрузки watchdog_caused_reboot() вернёт true, поэтому
+ * повторной перезагрузки не будет.
+ */
+#include "hardware/watchdog.h"
+#include "hardware/structs/vreg_and_chip_reset.h"
+
+void keyboard_post_init_user(void) {
+    bool power_on = vreg_and_chip_reset_hw->chip_reset & VREG_AND_CHIP_RESET_CHIP_RESET_HAD_POR_BITS;
+    if (!is_keyboard_master() && power_on && !watchdog_caused_reboot()) {
+        watchdog_reboot(0, 0, 0); // немедленный сброс всего чипа, кроме генераторов, как кнопкой reset
+        while (true) {
+        }
+    }
+}
