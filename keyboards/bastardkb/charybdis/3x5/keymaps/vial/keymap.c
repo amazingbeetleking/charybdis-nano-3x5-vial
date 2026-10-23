@@ -168,23 +168,57 @@ bool shutdown_user(bool jump_to_bootloader) {
 }
 
 /*
- * Заплатка: автоматический перезапуск ведомой (левой) половины после включения питания.
+ * Заплатка: два автоматических перезапуска ведомой (левой) половины после включения питания.
  *
  * Левая половина при холодном старте через TRRS иногда запускается в неудачном
- * состоянии, а нажатие кнопки reset это лечит. Этот код делает то же самое сам:
- * если половина ведомая и стартовала от включения питания (а не от кнопки reset
- * и не от watchdog), она один раз перезагружает себя через watchdog RP2040.
- * После такой перезагрузки watchdog_caused_reboot() вернёт true, поэтому
- * повторной перезагрузки не будет.
+ * состоянии, а нажатие кнопки reset это лечит (иногда только со второго раза).
+ * Этот код делает то же самое сам: если половина ведомая и стартовала от включения
+ * питания, она перезапускает себя COLD_BOOT_REBOOTS раз подряд, а потом работает.
+ *
+ * Перезапуск делается аппаратным сбросом через блок watchdog внутри RP2040:
+ * он сбрасывает весь чип, кроме генераторов частоты, — как кнопка reset.
+ * Это не встроенный в QMK SPLIT_WATCHDOG (он убран) и не фоновый контроль:
+ * код выполняется только при старте.
+ *
+ * Счётчик перезапусков хранится в регистре watchdog scratch[0], который переживает
+ * сброс через watchdog. pico-sdk использует только scratch[4..7].
+ * Кнопка reset и включение питания счётчик не продолжают, поэтому зацикливания нет.
  */
 #include "hardware/watchdog.h"
+#include "hardware/structs/watchdog.h"
 #include "hardware/structs/vreg_and_chip_reset.h"
 
+#define COLD_BOOT_REBOOTS 2            // сколько раз перезапуститься после включения питания
+#define COLD_BOOT_MAGIC 0x4C480000u    // метка «это наши перезапуски» в старших 16 битах
+#define COLD_BOOT_MAGIC_MASK 0xFFFF0000u
+
+static void cold_boot_reboot(uint32_t count) {
+    watchdog_hw->scratch[0] = COLD_BOOT_MAGIC | count; // номер перезапуска переживёт сброс
+    watchdog_reboot(0, 0, 0);                         // немедленный сброс чипа, как кнопкой reset
+    while (true) {
+    }
+}
+
 void keyboard_post_init_user(void) {
-    bool power_on = vreg_and_chip_reset_hw->chip_reset & VREG_AND_CHIP_RESET_CHIP_RESET_HAD_POR_BITS;
-    if (!is_keyboard_master() && power_on && !watchdog_caused_reboot()) {
-        watchdog_reboot(0, 0, 0); // немедленный сброс всего чипа, кроме генераторов, как кнопкой reset
-        while (true) {
+    if (is_keyboard_master()) {
+        return; // правая половина на USB не перезапускается
+    }
+
+    uint32_t mark = watchdog_hw->scratch[0];
+
+    if (!watchdog_caused_reboot()) {
+        // Аппаратный старт: включение питания или кнопка reset.
+        bool power_on = vreg_and_chip_reset_hw->chip_reset & VREG_AND_CHIP_RESET_CHIP_RESET_HAD_POR_BITS;
+        if (power_on) {
+            cold_boot_reboot(1); // первый перезапуск
+        }
+    } else if ((mark & COLD_BOOT_MAGIC_MASK) == COLD_BOOT_MAGIC) {
+        // Старт после нашего же перезапуска: продолжаем, пока не наберём нужное число.
+        uint32_t count = mark & ~COLD_BOOT_MAGIC_MASK;
+        if (count < COLD_BOOT_REBOOTS) {
+            cold_boot_reboot(count + 1);
         }
     }
+
+    watchdog_hw->scratch[0] = 0; // перезапуски закончены, половина работает
 }
