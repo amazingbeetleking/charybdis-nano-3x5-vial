@@ -27,8 +27,18 @@
 #define TAPPING_FORCE_HOLD
 #define PERMISSIVE_HOLD
 
+// TT(слой): удержание — слой пока держишь, одно короткое нажатие — включить/выключить слой.
+// В Vial то же самое: QMK Settings → Tap-Hold → Tapping Toggle.
+#define TAPPING_TOGGLE 1
+
 #ifdef POINTING_DEVICE_ENABLE
 // #define CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
+
+// Настройки скролла трекболом (раскомментируйте нужное):
+// #define CHARYBDIS_DRAGSCROLL_REVERSE_Y        // инвертировать вертикальный скролл
+// #define CHARYBDIS_DRAGSCROLL_REVERSE_X        // инвертировать горизонтальный скролл
+// #define CHARYBDIS_DRAGSCROLL_BUFFER_SIZE 6    // больше = медленнее скролл (по умолчанию 6)
+// #define CHARYBDIS_DRAGSCROLL_DPI 100          // DPI сенсора в режиме скролла (по умолчанию 100)
 #endif
 
 #ifdef RGB_MATRIX_ENABLE

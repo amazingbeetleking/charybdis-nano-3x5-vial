@@ -12,9 +12,11 @@ enum charybdis_keymap_layers {
     LAYER_POINTER,
     LAYER_NUMERAL,
     LAYER_SYMBOLS,
+    LAYER_SCROLL, // = 7: пока этот слой активен, трекбол скроллит
 };
 
 #define CHARYBDIS_AUTO_SNIPING_ON_LAYER LAYER_POINTER
+#define CHARYBDIS_AUTO_DRAGSCROLL_ON_LAYER LAYER_SCROLL
 
 #ifdef CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 static uint16_t auto_pointer_layer_timer = 0;
@@ -142,12 +144,26 @@ void matrix_scan_user(void) {
 }
 #    endif // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 
-#    ifdef CHARYBDIS_AUTO_SNIPING_ON_LAYER
+#    if defined(CHARYBDIS_AUTO_SNIPING_ON_LAYER) || defined(CHARYBDIS_AUTO_DRAGSCROLL_ON_LAYER)
 layer_state_t layer_state_set_user(layer_state_t state) {
+#        ifdef CHARYBDIS_AUTO_SNIPING_ON_LAYER
     charybdis_set_pointer_sniping_enabled(layer_state_cmp(state, CHARYBDIS_AUTO_SNIPING_ON_LAYER));
+#        endif // CHARYBDIS_AUTO_SNIPING_ON_LAYER
+
+#        ifdef CHARYBDIS_AUTO_DRAGSCROLL_ON_LAYER
+    // Скролл переключается только в момент включения/выключения слоя скролла.
+    // Так смена других слоёв не сбрасывает скролл, включённый клавишей «Scrl Tog».
+    static bool scroll_layer_was_active = false;
+    bool        scroll_layer_active     = layer_state_cmp(state, CHARYBDIS_AUTO_DRAGSCROLL_ON_LAYER);
+    if (scroll_layer_active != scroll_layer_was_active) {
+        charybdis_set_pointer_dragscroll_enabled(scroll_layer_active);
+        scroll_layer_was_active = scroll_layer_active;
+    }
+#        endif // CHARYBDIS_AUTO_DRAGSCROLL_ON_LAYER
+
     return state;
 }
-#    endif // CHARYBDIS_AUTO_SNIPING_ON_LAYER
+#    endif // CHARYBDIS_AUTO_SNIPING_ON_LAYER || CHARYBDIS_AUTO_DRAGSCROLL_ON_LAYER
 #endif     // POINTING_DEVICE_ENABLE
 
 #ifdef RGB_MATRIX_ENABLE
